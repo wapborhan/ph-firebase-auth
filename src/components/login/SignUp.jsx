@@ -4,8 +4,7 @@ import { useState } from "react";
 import app from "../../firebase/firebase-init";
 
 const SignUp = () => {
-  // const [password, sePassword] = useState("");
-  // const [email, seEmail] = useState("");
+  const [massage, seMassege] = useState([]);
 
   const auth = getAuth(app);
 
@@ -20,16 +19,29 @@ const SignUp = () => {
         const user = userCredential.user;
 
         console.log(user);
+
+        seMassege([
+          {
+            message: "Sign up Complete",
+            color: "green",
+          },
+        ]);
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        console.log(errorCode, errorMessage);
+        seMassege([
+          {
+            message: errorMessage,
+            color: "red",
+          },
+        ]);
         // ..
       });
   };
+
   return (
     <div>
       <div className="signup-1 flex items-center relative h-screen">
@@ -40,7 +52,25 @@ const SignUp = () => {
               <h2 className="text-3xl text-gray-800 text-center">
                 Create Your Account
               </h2>
-
+              {massage && (
+                <>
+                  <div className="message mt-4 text-1xl flex justify-center font-bold">
+                    {massage.map((msg, idx) => {
+                      return (
+                        <div
+                          className={`text-${msg.color}-600`}
+                          key={idx}
+                          style={{
+                            color: msg.color,
+                          }}
+                        >
+                          {msg.message}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
               <form onSubmit={handleRegister}>
                 <div className="signup-form mt-6 md:mt-12">
                   <div className="border-2 border-solid rounded flex items-center mb-4">
