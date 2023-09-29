@@ -13,6 +13,16 @@ const SignUp = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
+    if (password.length < 6) {
+      seMassege([
+        {
+          message: "Password should be at least 6 characters",
+          color: "red",
+        },
+      ]);
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up
@@ -92,6 +102,7 @@ const SignUp = () => {
                         placeholder="E-mail"
                         name="email"
                         className="h-10 py-1 pr-3 w-full"
+                        required
                       />
                     </div>
                   </div>
@@ -125,6 +136,7 @@ const SignUp = () => {
                         name="password"
                         placeholder="Password"
                         className="h-10 py-1 pr-3 w-full"
+                        required
                       />
                     </div>
                   </div>
