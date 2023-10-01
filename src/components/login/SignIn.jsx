@@ -117,6 +117,15 @@ const SignIn = () => {
                 >
                   Sign UP
                 </NavLink>
+              </p>{" "}
+              <p className="text-gray-500 text-center">
+                Have not an account,{" "}
+                <NavLink
+                  to="/forgotpassword"
+                  className="text-indigo-600 hover:underline"
+                >
+                  Forgot Pass
+                </NavLink>
               </p>
             </div>
           </div>

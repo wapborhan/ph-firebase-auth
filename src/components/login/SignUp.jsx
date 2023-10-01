@@ -4,7 +4,7 @@ import { useState } from "react";
 import app from "../../firebase/firebase-init";
 
 const SignUp = () => {
-  const [massage, seMassege] = useState([]);
+  const [massage, setMassege] = useState([]);
 
   const auth = getAuth(app);
 
@@ -12,11 +12,22 @@ const SignUp = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const accepter = e.target.terms.checked;
+
+    console.log(accepter);
 
     if (password.length < 6) {
-      seMassege([
+      setMassege([
         {
           message: "Password should be at least 6 characters",
+          color: "red",
+        },
+      ]);
+      return;
+    } else if (!accepter) {
+      setMassege([
+        {
+          message: "Please Accept our Terms and Conditions",
           color: "red",
         },
       ]);
@@ -30,7 +41,7 @@ const SignUp = () => {
 
         console.log(user);
 
-        seMassege([
+        setMassege([
           {
             message: "Sign up Complete",
             color: "green",
@@ -42,7 +53,7 @@ const SignUp = () => {
         // const errorCode = error.code;
         const errorMessage = error.message;
 
-        seMassege([
+        setMassege([
           {
             message: errorMessage,
             color: "red",
@@ -142,7 +153,8 @@ const SignUp = () => {
                   </div>
 
                   <p className="text-sm text-center mt-6">
-                    By signing up, you agree to our{" "}
+                    <input type="checkbox" name="terms" id="terms" /> By signing
+                    up, you agree to our{" "}
                     <a href="#" className="text-indigo-600 hover:underline">
                       Terms
                     </a>{" "}
