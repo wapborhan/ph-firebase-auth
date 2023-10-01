@@ -18,7 +18,13 @@ const SignIn = () => {
         // Signed up
         const user = userCredential.user;
 
-        setUser(user);
+        if (user.emailVerified) {
+          setUser(user);
+          alert("Email verified");
+        } else {
+          alert("Email not verified");
+        }
+
         // ...
       })
       .catch((error) => {

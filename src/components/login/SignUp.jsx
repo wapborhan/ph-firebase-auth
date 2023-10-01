@@ -1,5 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import { useState } from "react";
 import app from "../../firebase/firebase-init";
 
@@ -38,9 +43,28 @@ const SignUp = () => {
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-
         console.log(user);
 
+        updateProfile(user, {
+          displayName: "Jane Q. User",
+          photoURL: "https://example.com/jane-q-user/profile.jpg",
+        })
+          .then(() => {
+            // Profile updated!
+            console.log("Updated profile");
+            // ...
+          })
+          .catch((error) => {
+            console.log(error);
+            // An error occurred
+            // ...
+          });
+
+        sendEmailVerification(user).then(() => {
+          // Email verification sent!
+          alert("Verification sent");
+          // ...
+        });
         setMassege([
           {
             message: "Sign up Complete",
